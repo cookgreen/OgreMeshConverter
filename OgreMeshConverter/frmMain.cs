@@ -51,6 +51,9 @@ namespace OgreMeshConverter
             if (!File.Exists(txtOgreMesh.Text))
                 return;
 
+            if (string.IsNullOrEmpty(txtObjFile.Text))
+                return;
+
             btnConvert.Enabled = false;
             worker.RunWorkerAsync();
         }
@@ -89,20 +92,29 @@ namespace OgreMeshConverter
             DirectoryInfo di = new DirectoryInfo(outputFileName);
 
             List<Vector3> vData;
+            List<Vector3> vnData;
+            List<Vector3> vtData;
             List<uint> iData;
-            readMeshVertexDataAndIndexData(mesh, out vData, out iData);
+            readMeshVertexDataAndIndexData(mesh, out vData, out vnData, out vtData, out iData);
 
-            generateObjFile(vData, iData, outputFileName);
+            generateObjFile(vData, vnData, vtData, iData, outputFileName);
         }
 
-        private void readMeshVertexDataAndIndexData(MeshPtr mesh, out List<Vector3> vData, out List<uint> iData)
+        private void readMeshVertexDataAndIndexData(MeshPtr mesh, out List<Vector3> vData, out List<Vector3> vnData, out List<Vector3> vtData, out List<uint> iData)
         {
             StaticMeshData staticMeshData = new StaticMeshData(mesh);
             vData = staticMeshData.Vertices.ToList();
+            vnData = staticMeshData.Norms.ToList();
+            vtData = staticMeshData.TextureCoords.ToList();
             iData = staticMeshData.Indices.ToList();
         }
 
-        private void generateObjFile(List<Vector3> vData, List<uint> iData, string outputFileName)
+        private void generateObjFile(
+            List<Vector3> vData, 
+            List<Vector3> vnData,
+            List<Vector3> vtData,
+            List<uint> iData, 
+            string outputFileName)
         {
             if (File.Exists(outputFileName))
                 File.Delete(outputFileName);
@@ -115,18 +127,30 @@ namespace OgreMeshConverter
                 writer.WriteLine(string.Format("v {0} {1} {2}", v.x, v.y, v.z));
             }
 
+            for (int i = 0; i < vnData.Count; i++)
+            {
+                var vn = vnData[i];
+                writer.WriteLine(string.Format("vn {0} {1} {2}", vn.x, vn.y, vn.z));
+            }
+
+            for (int i = 0; i < vtData.Count; i++)
+            {
+                var vt = vtData[i];
+                writer.WriteLine(string.Format("vt {0} {1} {2}", vt.x, vt.y, vt.z));
+            }
+
             int iLength = iData.Count / 3;
             for (int i = 0; i < iLength; i++)
             {
-                uint i1 = iData[i * 3 + 0];
-                uint i2 = iData[i * 3 + 1];
-                uint i3 = iData[i * 3 + 2];
+                uint v1 = iData[i * 3 + 0];
+                uint v2 = iData[i * 3 + 1];
+                uint v3 = iData[i * 3 + 2];
 
-                Vector3 v1 = vData[(int)i1];
-                Vector3 v2 = vData[(int)i2];
-                Vector3 v3 = vData[(int)i3];
-
-                writer.WriteLine(string.Format("f {0} {1} {2}", i1 + 1, i2 + 1, i3 + 1));
+                writer.WriteLine(string.Format(
+                    "f {0}/{3}/{6} {1}/{4}/{7} {2}/{5}/{8}", 
+                    v1 + 1, v2 + 1, v3 + 1,
+                    v1 + 1, v2 + 1, v3 + 1,
+                    v1 + 1, v2 + 1, v3 + 1));
             }
 
             writer.Dispose();

@@ -9,7 +9,9 @@ namespace OgreMeshConverter
 	public class StaticMeshData
 	{
 		private Vector3[] vertices;
-		private uint[] indices;
+        private Vector3[] norms;
+        private Vector3[] texturecoords;
+        private uint[] indices;
 		private MeshPtr meshPtr;
 		private Vector3 scale = Vector3.UNIT_SCALE;
 
@@ -39,9 +41,25 @@ namespace OgreMeshConverter
 			{
 				return this.vertices;
 			}
-		}
+        }
 
-		public uint[] Indices
+        public Vector3[] Norms
+        {
+            get
+            {
+                return this.norms;
+            }
+        }
+
+        public Vector3[] TextureCoords
+        {
+            get
+            {
+                return this.texturecoords;
+            }
+        }
+
+        public uint[] Indices
 		{
 			get
 			{
@@ -125,28 +143,54 @@ namespace OgreMeshConverter
 
 			// Allocate space for the vertices and indices
 			vertices = new Vector3[vertexCount];
+			norms = new Vector3[vertexCount];
+			texturecoords = new Vector3[vertexCount];
 			indices = new uint[indexCount];
 		}
 
 		private unsafe uint ReadVertexData(uint vertexOffset, VertexData vertexData)
 		{
 			VertexElement posElem = vertexData.vertexDeclaration.FindElementBySemantic(VertexElementSemantic.VES_POSITION);
-			HardwareVertexBufferSharedPtr vertexBuffer = vertexData.vertexBufferBinding.GetBuffer(posElem.Source);
-			byte* vertexMemory = (byte*)vertexBuffer.Lock(HardwareBuffer.LockOptions.HBL_READ_ONLY);
+            VertexElement normanElem = vertexData.vertexDeclaration.FindElementBySemantic(VertexElementSemantic.VES_NORMAL);
+            VertexElement textcoordElem = vertexData.vertexDeclaration.FindElementBySemantic(VertexElementSemantic.VES_TEXTURE_COORDINATES);
+            
 			float* pElem;
+            float* nElem;
+            float* tElem;
 
-			for (uint i = 0; i < vertexData.vertexCount; i++)
+            HardwareVertexBufferSharedPtr vertexBuffer = vertexData.vertexBufferBinding.GetBuffer(posElem.Source);
+            HardwareVertexBufferSharedPtr vertexNormalBuffer = vertexData.vertexBufferBinding.GetBuffer(normanElem.Source);
+            HardwareVertexBufferSharedPtr vertexTextureCoordBuffer = vertexData.vertexBufferBinding.GetBuffer(textcoordElem.Source);
+			
+			byte* vertexMemory = (byte*)vertexBuffer.Lock(HardwareBuffer.LockOptions.HBL_READ_ONLY);
+            byte* vertexNormMemory = (byte*)vertexNormalBuffer.Lock(HardwareBuffer.LockOptions.HBL_READ_ONLY);
+            byte* vertexTextureCoordMemory = (byte*)vertexTextureCoordBuffer.Lock(HardwareBuffer.LockOptions.HBL_READ_ONLY);
+
+            for (uint i = 0; i < vertexData.vertexCount; i++)
 			{
 				posElem.BaseVertexPointerToElement(vertexMemory, &pElem);
+                normanElem.BaseVertexPointerToElement(vertexNormMemory, &nElem);
+                textcoordElem.BaseVertexPointerToElement(vertexTextureCoordMemory, &tElem);
 
-				Vector3 point = new Vector3(pElem[0], pElem[1], pElem[2]);
+                Vector3 point = new Vector3(pElem[0], pElem[1], pElem[2]);
 				vertices[vertexOffset] = point * this.scale;
-				vertexMemory += vertexBuffer.VertexSize;
-				vertexOffset++;
+                Vector3 norm = new Vector3(nElem[0], nElem[1], nElem[2]);
+				norms[vertexOffset] = norm;
+                Vector3 texturecoord = new Vector3(tElem[0], tElem[1], tElem[2]);
+				texturecoords[vertexOffset] = texturecoord;
+
+                vertexMemory += vertexBuffer.VertexSize;
+                vertexNormMemory += vertexNormalBuffer.VertexSize;
+                vertexTextureCoordMemory += vertexTextureCoordBuffer.VertexSize;
+
+                vertexOffset++;
 			}
 
 			vertexBuffer.Unlock();
-			return vertexOffset;
+			vertexNormalBuffer.Unlock();
+			vertexTextureCoordBuffer.Unlock();
+
+            return vertexOffset;
 		}
 		private unsafe int ReadIndexData(int indexOffset, uint vertexOffset, IndexData indexData)
 		{
