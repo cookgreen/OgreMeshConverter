@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OgreMeshConverter", "OgreMeshConverter\OgreMeshConverter.csproj", "{ECF672E2-BC1A-420E-AD45-B043407D4C41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OgreMeshConverter.Interface", "OgreMeshConverter.Interface\OgreMeshConverter.Interface.csproj", "{9ECC1C91-9394-4C7C-ABB8-96BD4B4444C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OgreMeshObjConverter", "OgreMeshObjConverter\OgreMeshObjConverter.csproj", "{51383DEE-6D73-4ABB-A076-7531F488C0A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +19,12 @@ Global
 		{ECF672E2-BC1A-420E-AD45-B043407D4C41}.Debug|x86.Build.0 = Debug|x86
 		{ECF672E2-BC1A-420E-AD45-B043407D4C41}.Release|x86.ActiveCfg = Release|x86
 		{ECF672E2-BC1A-420E-AD45-B043407D4C41}.Release|x86.Build.0 = Release|x86
+		{9ECC1C91-9394-4C7C-ABB8-96BD4B4444C3}.Debug|x86.ActiveCfg = Debug|x86
+		{9ECC1C91-9394-4C7C-ABB8-96BD4B4444C3}.Debug|x86.Build.0 = Debug|x86
+		{9ECC1C91-9394-4C7C-ABB8-96BD4B4444C3}.Release|x86.ActiveCfg = Release|x86
+		{51383DEE-6D73-4ABB-A076-7531F488C0A1}.Debug|x86.ActiveCfg = Debug|x86
+		{51383DEE-6D73-4ABB-A076-7531F488C0A1}.Debug|x86.Build.0 = Debug|x86
+		{51383DEE-6D73-4ABB-A076-7531F488C0A1}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -31,10 +31,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtOgreMesh = new System.Windows.Forms.TextBox();
             this.btnBrowseMesh = new System.Windows.Forms.Button();
-            this.btnBrowseObj = new System.Windows.Forms.Button();
-            this.txtObjFile = new System.Windows.Forms.TextBox();
+            this.btnBrowseExport = new System.Windows.Forms.Button();
+            this.txtExportFile = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnConvert = new System.Windows.Forms.Button();
+            this.cmbOutputType = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -48,10 +49,10 @@
             // 
             // txtOgreMesh
             // 
-            this.txtOgreMesh.Location = new System.Drawing.Point(169, 15);
+            this.txtOgreMesh.Location = new System.Drawing.Point(161, 15);
             this.txtOgreMesh.Name = "txtOgreMesh";
             this.txtOgreMesh.ReadOnly = true;
-            this.txtOgreMesh.Size = new System.Drawing.Size(359, 25);
+            this.txtOgreMesh.Size = new System.Drawing.Size(367, 25);
             this.txtOgreMesh.TabIndex = 1;
             // 
             // btnBrowseMesh
@@ -64,32 +65,33 @@
             this.btnBrowseMesh.UseVisualStyleBackColor = true;
             this.btnBrowseMesh.Click += new System.EventHandler(this.btnBrowseMesh_Click);
             // 
-            // btnBrowseObj
+            // btnBrowseExport
             // 
-            this.btnBrowseObj.Location = new System.Drawing.Point(534, 57);
-            this.btnBrowseObj.Name = "btnBrowseObj";
-            this.btnBrowseObj.Size = new System.Drawing.Size(55, 26);
-            this.btnBrowseObj.TabIndex = 5;
-            this.btnBrowseObj.Text = "...";
-            this.btnBrowseObj.UseVisualStyleBackColor = true;
-            this.btnBrowseObj.Click += new System.EventHandler(this.btnBrowseObj_Click);
+            this.btnBrowseExport.Enabled = false;
+            this.btnBrowseExport.Location = new System.Drawing.Point(534, 57);
+            this.btnBrowseExport.Name = "btnBrowseExport";
+            this.btnBrowseExport.Size = new System.Drawing.Size(55, 26);
+            this.btnBrowseExport.TabIndex = 5;
+            this.btnBrowseExport.Text = "...";
+            this.btnBrowseExport.UseVisualStyleBackColor = true;
+            this.btnBrowseExport.Click += new System.EventHandler(this.btnBrowseObj_Click);
             // 
-            // txtObjFile
+            // txtExportFile
             // 
-            this.txtObjFile.Location = new System.Drawing.Point(169, 58);
-            this.txtObjFile.Name = "txtObjFile";
-            this.txtObjFile.ReadOnly = true;
-            this.txtObjFile.Size = new System.Drawing.Size(359, 25);
-            this.txtObjFile.TabIndex = 4;
+            this.txtExportFile.Location = new System.Drawing.Point(288, 58);
+            this.txtExportFile.Name = "txtExportFile";
+            this.txtExportFile.ReadOnly = true;
+            this.txtExportFile.Size = new System.Drawing.Size(240, 25);
+            this.txtExportFile.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 61);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(151, 15);
+            this.label2.Size = new System.Drawing.Size(103, 15);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Wavefont Obj File:";
+            this.label2.Text = "Output File:";
             // 
             // btnConvert
             // 
@@ -101,14 +103,27 @@
             this.btnConvert.UseVisualStyleBackColor = true;
             this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
+            // cmbOutputType
+            // 
+            this.cmbOutputType.DisplayMember = "TypeName";
+            this.cmbOutputType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOutputType.FormattingEnabled = true;
+            this.cmbOutputType.Location = new System.Drawing.Point(161, 61);
+            this.cmbOutputType.Name = "cmbOutputType";
+            this.cmbOutputType.Size = new System.Drawing.Size(121, 23);
+            this.cmbOutputType.TabIndex = 7;
+            this.cmbOutputType.ValueMember = "TypeName";
+            this.cmbOutputType.SelectedIndexChanged += new System.EventHandler(this.cmbOutputType_SelectedIndexChanged);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(606, 178);
+            this.Controls.Add(this.cmbOutputType);
             this.Controls.Add(this.btnConvert);
-            this.Controls.Add(this.btnBrowseObj);
-            this.Controls.Add(this.txtObjFile);
+            this.Controls.Add(this.btnBrowseExport);
+            this.Controls.Add(this.txtExportFile);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnBrowseMesh);
             this.Controls.Add(this.txtOgreMesh);
@@ -130,10 +145,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtOgreMesh;
         private System.Windows.Forms.Button btnBrowseMesh;
-        private System.Windows.Forms.Button btnBrowseObj;
-        private System.Windows.Forms.TextBox txtObjFile;
+        private System.Windows.Forms.Button btnBrowseExport;
+        private System.Windows.Forms.TextBox txtExportFile;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnConvert;
+        private System.Windows.Forms.ComboBox cmbOutputType;
     }
 }
 
