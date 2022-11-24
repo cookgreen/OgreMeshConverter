@@ -35,6 +35,9 @@
     <Prefer32Bit>true</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>OMC.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mogre">
       <HintPath>..\Lib\Mogre.dll</HintPath>
@@ -90,6 +93,9 @@
       <Project>{9ecc1c91-9394-4c7c-abb8-96bd4b4444c3}</Project>
       <Name>OgreMeshConverter.Interface</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OMC.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
