@@ -31,8 +31,6 @@ namespace OgreMeshConverter
             worker = new BackgroundWorker();
             worker.DoWork += Worker_DoWork;
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-
-            initMogre();
         }
 
         private void initMogre()
@@ -124,19 +122,33 @@ namespace OgreMeshConverter
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnConvert.Enabled = true;
-            MessageBox.Show("Done!");
+
+            if ((bool)e.Result)
+            {
+                MessageBox.Show("Done!");
+            }
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             DirectoryInfo di = new DirectoryInfo(txtOgreMesh.Text);
 
+            initMogre();
+
             ResourceGroupManager.Singleton.AddResourceLocation(di.Parent.FullName, "FileSystem", "General");
             ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
 
-            MeshPtr mesh = MeshManager.Singleton.Load(Path.GetFileName(txtOgreMesh.Text), "General");
+            try
+            {
+                MeshPtr mesh = MeshManager.Singleton.Load(Path.GetFileName(txtOgreMesh.Text), "General");
 
-            ((IMeshConvetExporter)cmbOutputType.SelectedItem).Export(mesh, txtExportFile.Text);
+                ((IMeshConvetExporter)cmbOutputType.SelectedItem).Export(mesh, txtExportFile.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Unspported Ogre3d Mesh Version!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Result = false;
+            }
         }
 
         private void cmbOutputType_SelectedIndexChanged(object sender, EventArgs e)

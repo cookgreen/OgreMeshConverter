@@ -2,11 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("OgreMeshConverter")]
+[assembly: AssemblyTitle("OgreMeshConverter [<=1.7]")]
 [assembly: AssemblyDescription("Convert Ogre3d Mesh (.mesh) into other format")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Yin Xiaoguang")]
-[assembly: AssemblyProduct("OgreMeshConverter")]
+[assembly: AssemblyProduct("OgreMeshConverter [<=1.7]")]
 [assembly: AssemblyCopyright("GNU GPLv3")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

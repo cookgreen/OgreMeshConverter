@@ -134,7 +134,7 @@
             this.Name = "frmMain";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "OgreMeshConverter - [1.7]";
+            this.Text = "OgreMeshConverter - [<=1.7]";
             this.ResumeLayout(false);
             this.PerformLayout();
 
