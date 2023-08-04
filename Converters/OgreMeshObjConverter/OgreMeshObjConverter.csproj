@@ -15,7 +15,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Bin\Exporters\</OutputPath>
+    <OutputPath>..\..\Bin\Exporters\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>..\Bin\Exporters\</OutputPath>
+    <OutputPath>..\..\Bin\Exporters\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mogre">
-      <HintPath>..\..\..\Development\OgreMeshConverter\Lib\Mogre.dll</HintPath>
+      <HintPath>..\..\Lib\Mogre.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,7 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OgreMeshConverter.Interface\OgreMeshConverter.Interface.csproj">
+    <ProjectReference Include="..\..\OgreMeshConverter.Interface\OgreMeshConverter.Interface.csproj">
       <Project>{9ecc1c91-9394-4c7c-abb8-96bd4b4444c3}</Project>
       <Name>OgreMeshConverter.Interface</Name>
     </ProjectReference>

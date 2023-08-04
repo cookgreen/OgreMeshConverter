@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OgreMeshConverter", "OgreMe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OgreMeshConverter.Interface", "OgreMeshConverter.Interface\OgreMeshConverter.Interface.csproj", "{9ECC1C91-9394-4C7C-ABB8-96BD4B4444C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OgreMeshObjConverter", "OgreMeshObjConverter\OgreMeshObjConverter.csproj", "{51383DEE-6D73-4ABB-A076-7531F488C0A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OgreMeshObjConverter", "Converters\OgreMeshObjConverter\OgreMeshObjConverter.csproj", "{51383DEE-6D73-4ABB-A076-7531F488C0A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Converters", "Converters", "{E2A40055-C9D4-4490-BE53-FA316601B4E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{51383DEE-6D73-4ABB-A076-7531F488C0A1} = {E2A40055-C9D4-4490-BE53-FA316601B4E1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A0203BC-066B-4A6C-B1E8-BA58A38753D1}

@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Mogre;
 using OgreMeshConverter.Interface;
+using Sunny.UI;
 
 namespace OgreMeshConverter
 {
-    public partial class frmMain : Form
+    public partial class frmMain : UIForm
     {
         private BackgroundWorker worker;
         private List<IMeshConvetExporter> convetExporters;
@@ -105,13 +106,13 @@ namespace OgreMeshConverter
         {
             if (!File.Exists(txtOgreMesh.Text))
             {
-                MessageBox.Show("Please select a valid Ogre3d mesh file!");
+                UIMessageDialog.ShowErrorDialog(this, "Please select a valid Ogre3d mesh file!", UIStyle.Blue);
                 return;
             }
 
             if (string.IsNullOrEmpty(txtExportFile.Text))
-            {
-                MessageBox.Show("Please select a valid export directory!");
+			{
+				UIMessageDialog.ShowErrorDialog(this, "Please select a valid export directory!", UIStyle.Blue);
                 return;
             }
 

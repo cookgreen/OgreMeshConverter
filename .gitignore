@@ -1,4 +1,8 @@
 .vs/*
 *.log
+*.cache
+*.FileListAbsolute.txt
+*.CopyComplete
+_IsIncrementalBuild
 */obj/*
 */bin/*
