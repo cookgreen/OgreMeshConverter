@@ -8,9 +8,11 @@ using Mogre;
 namespace OgreMeshConverter.Interface
 {
     public interface IMeshConvetExporter
-    {
-        string TypeName { get; }
+	{
+		event Action<string> ReportExportMessage;
+
+		string TypeName { get; }
         string Description { get; }
-        void Export(MeshPtr ogreMesh, string outputFileName); 
+        void Export(MeshPtr ogreMesh, string outputFileName);
     }
 }

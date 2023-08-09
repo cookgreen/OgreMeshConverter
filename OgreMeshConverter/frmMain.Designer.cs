@@ -37,6 +37,11 @@
 			this.label2 = new Sunny.UI.UILabel();
 			this.btnConvert = new Sunny.UI.UIButton();
 			this.cmbOutputType = new Sunny.UI.UIComboBox();
+			this.btnDetailsExpander = new Sunny.UI.UIButton();
+			this.uiLine1 = new Sunny.UI.UILine();
+			this.uiGroupBox1 = new Sunny.UI.UIGroupBox();
+			this.txtOutputMessage = new Sunny.UI.UIRichTextBox();
+			this.uiGroupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -159,10 +164,68 @@
 			this.cmbOutputType.ZoomScaleRect = new System.Drawing.Rectangle(0, 0, 0, 0);
 			this.cmbOutputType.SelectedIndexChanged += new System.EventHandler(this.cmbOutputType_SelectedIndexChanged);
 			// 
+			// btnDetailsExpander
+			// 
+			this.btnDetailsExpander.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.btnDetailsExpander.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.btnDetailsExpander.Location = new System.Drawing.Point(17, 179);
+			this.btnDetailsExpander.MinimumSize = new System.Drawing.Size(1, 1);
+			this.btnDetailsExpander.Name = "btnDetailsExpander";
+			this.btnDetailsExpander.Size = new System.Drawing.Size(134, 59);
+			this.btnDetailsExpander.TabIndex = 8;
+			this.btnDetailsExpander.Text = "Details >>";
+			this.btnDetailsExpander.TipsFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.btnDetailsExpander.ZoomScaleRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+			this.btnDetailsExpander.Click += new System.EventHandler(this.btnDetailsExpander_Click);
+			// 
+			// uiLine1
+			// 
+			this.uiLine1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.uiLine1.Location = new System.Drawing.Point(17, 253);
+			this.uiLine1.MinimumSize = new System.Drawing.Size(1, 1);
+			this.uiLine1.Name = "uiLine1";
+			this.uiLine1.Size = new System.Drawing.Size(615, 29);
+			this.uiLine1.TabIndex = 9;
+			this.uiLine1.ZoomScaleRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+			// 
+			// uiGroupBox1
+			// 
+			this.uiGroupBox1.Controls.Add(this.txtOutputMessage);
+			this.uiGroupBox1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.uiGroupBox1.Location = new System.Drawing.Point(17, 276);
+			this.uiGroupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.uiGroupBox1.MinimumSize = new System.Drawing.Size(1, 1);
+			this.uiGroupBox1.Name = "uiGroupBox1";
+			this.uiGroupBox1.Padding = new System.Windows.Forms.Padding(0, 32, 0, 0);
+			this.uiGroupBox1.Size = new System.Drawing.Size(615, 265);
+			this.uiGroupBox1.TabIndex = 10;
+			this.uiGroupBox1.Text = "Output";
+			this.uiGroupBox1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+			this.uiGroupBox1.ZoomScaleRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+			// 
+			// txtOutputMessage
+			// 
+			this.txtOutputMessage.FillColor = System.Drawing.Color.White;
+			this.txtOutputMessage.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.txtOutputMessage.Location = new System.Drawing.Point(15, 37);
+			this.txtOutputMessage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.txtOutputMessage.MinimumSize = new System.Drawing.Size(1, 1);
+			this.txtOutputMessage.Name = "txtOutputMessage";
+			this.txtOutputMessage.Padding = new System.Windows.Forms.Padding(2);
+			this.txtOutputMessage.ReadOnly = true;
+			this.txtOutputMessage.ShowText = false;
+			this.txtOutputMessage.Size = new System.Drawing.Size(588, 210);
+			this.txtOutputMessage.TabIndex = 0;
+			this.txtOutputMessage.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+			this.txtOutputMessage.ZoomScaleRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+			// 
 			// frmMain
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(647, 255);
+			this.ClientSize = new System.Drawing.Size(647, 250);
+			this.Controls.Add(this.uiGroupBox1);
+			this.Controls.Add(this.uiLine1);
+			this.Controls.Add(this.btnDetailsExpander);
 			this.Controls.Add(this.cmbOutputType);
 			this.Controls.Add(this.btnConvert);
 			this.Controls.Add(this.btnBrowseExport);
@@ -177,6 +240,7 @@
 			this.Name = "frmMain";
 			this.Text = "OgreMeshConverter - [<=1.7]";
 			this.ZoomScaleRect = new System.Drawing.Rectangle(19, 19, 606, 178);
+			this.uiGroupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -192,6 +256,10 @@
         private Sunny.UI.UILabel label2;
         private Sunny.UI.UIButton btnConvert;
         private Sunny.UI.UIComboBox cmbOutputType;
-    }
+		private Sunny.UI.UIButton btnDetailsExpander;
+		private Sunny.UI.UILine uiLine1;
+		private Sunny.UI.UIGroupBox uiGroupBox1;
+		private Sunny.UI.UIRichTextBox txtOutputMessage;
+	}
 }
 

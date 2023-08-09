@@ -18,16 +18,20 @@ namespace OgreMeshConverter
 {
     public partial class frmMain : UIForm
     {
+        private frmLoading loadingForm;
+        private FormExpander expander;
         private BackgroundWorker worker;
-        private List<IMeshConvetExporter> convetExporters;
+		private IMeshConvetExporter currentSelectedExporter;
+		private List<IMeshConvetExporter> convetExporters;
 
         public frmMain()
         {
             InitializeComponent();
 
             convetExporters = new List<IMeshConvetExporter>();
+			expander = new FormExpander(this, 250, 555, FormExpandState.Collapse);
 
-            loadExporters();
+			loadExporters();
 
             worker = new BackgroundWorker();
             worker.DoWork += Worker_DoWork;
@@ -59,18 +63,22 @@ namespace OgreMeshConverter
             {
                 if (fsi.Extension == ".dll")
                 {
-                    Assembly assembly = Assembly.LoadFile(fsi.FullName);
-                    var assemblyTypes = assembly.GetTypes();
-                    for (int i = 0; i < assemblyTypes.Length; i++) 
+                    try
                     {
-                        var assemblyType = assemblyTypes[i];
-                        if (assemblyType.GetInterface("IMeshConvetExporter") != null)
+                        Assembly assembly = Assembly.LoadFile(fsi.FullName);
+                        var assemblyTypes = assembly.GetTypes();
+                        for (int i = 0; i < assemblyTypes.Length; i++)
                         {
-                            IMeshConvetExporter meshConvetExporter = assembly.CreateInstance(assemblyType.FullName) as IMeshConvetExporter;
-                            convetExporters.Add(meshConvetExporter);
-                            cmbOutputType.Items.Add(meshConvetExporter);
+                            var assemblyType = assemblyTypes[i];
+                            if (assemblyType.GetInterface("IMeshConvetExporter") != null)
+                            {
+                                IMeshConvetExporter meshConvetExporter = assembly.CreateInstance(assemblyType.FullName) as IMeshConvetExporter;
+                                convetExporters.Add(meshConvetExporter);
+                                cmbOutputType.Items.Add(meshConvetExporter);
+                            }
                         }
                     }
+                    catch { continue; }
                 }
             }
 
@@ -114,23 +122,26 @@ namespace OgreMeshConverter
 			{
 				UIMessageDialog.ShowErrorDialog(this, "Please select a valid export directory!", UIStyle.Blue);
                 return;
-            }
+			}
+
+			currentSelectedExporter = cmbOutputType.SelectedItem as IMeshConvetExporter;
+			currentSelectedExporter.ReportExportMessage += CurrentSelectedExporter_ReportExportMessage;
+
+			btnDetailsExpander_Click(sender, e);
+
+			loadingForm = new frmLoading();
+            loadingForm.Show();
 
             btnConvert.Enabled = false;
             worker.RunWorkerAsync();
         }
 
-        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            btnConvert.Enabled = true;
+		private void CurrentSelectedExporter_ReportExportMessage(string message)
+		{
+            txtOutputMessage.AppendText(message);
+		}
 
-            if ((bool)e.Result)
-            {
-                MessageBox.Show("Done!");
-            }
-        }
-
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+		private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             DirectoryInfo di = new DirectoryInfo(txtOgreMesh.Text);
 
@@ -142,19 +153,46 @@ namespace OgreMeshConverter
             try
             {
                 MeshPtr mesh = MeshManager.Singleton.Load(Path.GetFileName(txtOgreMesh.Text), "General");
-
                 ((IMeshConvetExporter)cmbOutputType.SelectedItem).Export(mesh, txtExportFile.Text);
+                e.Result = true;
             }
             catch
             {
-                MessageBox.Show("Unspported Ogre3d Mesh Version!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				UIMessageDialog.ShowErrorDialog(this, "Unspported Ogre3d Mesh Version!", UIStyle.Blue);
                 e.Result = false;
             }
-        }
+		}
 
-        private void cmbOutputType_SelectedIndexChanged(object sender, EventArgs e)
+		private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			loadingForm.Close();
+			btnConvert.Enabled = true;
+            currentSelectedExporter.ReportExportMessage -= CurrentSelectedExporter_ReportExportMessage;
+            currentSelectedExporter = null;
+
+			if ((bool)e.Result)
+			{
+				UIMessageDialog.ShowMessageDialog(this, "Export Done!", "Notice", false, UIStyle.Blue);
+			}
+		}
+
+		private void cmbOutputType_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnBrowseExport.Enabled = true;
         }
-    }
+
+		private void btnDetailsExpander_Click(object sender, EventArgs e)
+		{
+            expander.ToggleExpand();
+            switch(expander.CurrentExpandState)
+            {
+                case FormExpandState.Expand:
+                    btnDetailsExpander.Text = "Details <<";
+                    break;
+                case FormExpandState.Collapse:
+					btnDetailsExpander.Text = "Details >>";
+					break;
+            }
+		}
+	}
 }

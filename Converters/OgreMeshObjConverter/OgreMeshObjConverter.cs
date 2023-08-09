@@ -6,17 +6,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OgreMeshObjConverter
 {
     public class OgreMeshObjConverter : IMeshConvetExporter
-    {
-        public string TypeName { get { return "obj"; } }
+	{
+		public event Action<string> ReportExportMessage;
 
+		public string TypeName { get { return "obj"; } }
         public string Description { get { return "OBJ Model File"; } }
 
-        public void Export(MeshPtr mesh, string outputFileName)
+		public void Export(MeshPtr mesh, string outputFileName)
         {
             List<Vector3> vData;
             List<Vector3> vnData;
@@ -30,7 +32,15 @@ namespace OgreMeshObjConverter
 
         private void readMeshVertexDataAndIndexData(MeshPtr mesh, out List<Vector3> vData, out List<Vector3> vnData, out List<Vector3> vtData, out List<uint> iData)
         {
-            StaticMeshData staticMeshData = new StaticMeshData(mesh);
+            ReportExportMessage?.Invoke("Initizalting Ogre Mesh to Obj Exporter");
+
+			ReportExportMessage?.Invoke("---------------------------------------");
+
+			Thread.Sleep(1000);
+
+			ReportExportMessage?.Invoke("Calculating Mesh infomation........");
+
+			StaticMeshData staticMeshData = new StaticMeshData(mesh);
             vData = staticMeshData.Vertices.ToList();
             vnData = staticMeshData.Norms.ToList();
             vtData = staticMeshData.TextureCoords.ToList();
@@ -47,27 +57,37 @@ namespace OgreMeshObjConverter
             if (File.Exists(outputFileName))
                 File.Delete(outputFileName);
 
-            var writer = File.CreateText(outputFileName);
+			ReportExportMessage?.Invoke("Creating Obj Model File........");
 
-            for (int i = 0; i < vData.Count; i++)
+			var writer = File.CreateText(outputFileName);
+
+			ReportExportMessage?.Invoke("Writing Obj Model Vertex Information........");
+
+			for (int i = 0; i < vData.Count; i++)
             {
                 var v = vData[i];
                 writer.WriteLine(string.Format("v {0} {1} {2}", v.x, v.y, v.z));
-            }
+			}
 
-            for (int i = 0; i < vnData.Count; i++)
+			ReportExportMessage?.Invoke("Writing Obj Model Normal Information........");
+
+			for (int i = 0; i < vnData.Count; i++)
             {
                 var vn = vnData[i];
                 writer.WriteLine(string.Format("vn {0} {1} {2}", vn.x, vn.y, vn.z));
-            }
+			}
 
-            for (int i = 0; i < vtData.Count; i++)
+			ReportExportMessage?.Invoke("Writing Obj Model Texture Information........");
+
+			for (int i = 0; i < vtData.Count; i++)
             {
                 var vt = vtData[i];
                 writer.WriteLine(string.Format("vt {0} {1} {2}", vt.x, vt.y, vt.z));
-            }
+			}
 
-            int iLength = iData.Count / 3;
+			ReportExportMessage?.Invoke("Writing Obj Model Face Information........");
+
+			int iLength = iData.Count / 3;
             for (int i = 0; i < iLength; i++)
             {
                 uint v1 = iData[i * 3 + 0];
@@ -82,6 +102,8 @@ namespace OgreMeshObjConverter
             }
 
             writer.Dispose();
-        }
+
+			ReportExportMessage?.Invoke("Export Obj Model Progress Finish!");
+		}
     }
 }
