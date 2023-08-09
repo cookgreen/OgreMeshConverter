@@ -127,7 +127,10 @@ namespace OgreMeshConverter
 			currentSelectedExporter = cmbOutputType.SelectedItem as IMeshConvetExporter;
 			currentSelectedExporter.ReportExportMessage += CurrentSelectedExporter_ReportExportMessage;
 
-			btnDetailsExpander_Click(sender, e);
+            if (expander.CurrentExpandState == FormExpandState.Collapse)
+            {
+                btnDetailsExpander_Click(sender, e);
+            }
 
 			loadingForm = new frmLoading();
             loadingForm.Show();
