@@ -9,5 +9,9 @@ Ogre3d Mesh <= 1.7.1
 ## Environment 
 .NET Framework v4.8  
 
+## Based on
+Mogre  
+SunnyUI  
+
 ## License
 GNU GPLv3  
